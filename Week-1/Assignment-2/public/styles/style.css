@@ -1,0 +1,192 @@
+/* ================================= 
+  Base Element Styles
+==================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans TC", sans-serif;
+  line-height: 1.6;
+  text-align: center;
+}
+ul {
+  list-style: none;
+}
+li {
+  padding: 1rem;
+}
+a {
+  text-decoration: none;
+}
+.row {
+  max-width: 1200px;
+}
+.col {
+  padding-right: 1em;
+  padding-left: 1em;
+}
+button {
+  margin: 1rem;
+  padding: 1rem;
+  border: none;
+  /* background-color: skyblue; */
+  color: skyblue;
+  font-weight: bolder;
+}
+img {
+  max-width: 100%;
+}
+
+/* ================================= 
+  Base Layout Styles
+==================================== */
+
+/* ---- Header Navigation ---- */
+.main-header {
+  width: 80%;
+  margin: 0 auto;
+  max-width: 1150px;
+  min-width: 370px;
+
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  height: 88.8px;
+  width: 95.4px;
+  padding-right: 1rem;
+}
+.main-nav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  font-size: larger;
+  font-weight: bolder;
+}
+.main-nav a {
+  text-align: center;
+  display: block;
+  color: purple;
+}
+.main-nav a:hover {
+  color: orange;
+}
+
+/* ---- Main Containers ---- */
+.row {
+  height: 50%;
+  margin: auto;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  padding: 1.5rem 0;
+}
+.info {
+  flex-grow: 1;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 50vh;
+}
+.headshot {
+  width: 80%;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.row2 {
+  background-color: skyblue;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.row2 h2 {
+  width: 100%;
+  padding: 2rem;
+}
+.item {
+  background-color: white;
+  color: purple;
+  margin: 1.5rem;
+  padding: 1rem 0;
+  flex: 1 1 40%;
+}
+.item:hover {
+  color: orange;
+}
+button:hover {
+  color: purple;
+}
+/* ---- Layout Containers ---- */
+.banner,
+.main-footer {
+  text-align: center;
+}
+.banner {
+  color: #fff;
+  background: skyblue;
+  padding: 2rem 0;
+  margin-bottom: 48px;
+}
+.main-footer {
+  background: #d9e4ea;
+  margin-top: 50px;
+  padding-top: 2rem;
+}
+.icons {
+  width: 100%;
+}
+.icon {
+  height: 50px;
+  width: 50px;
+  margin: 0.25rem;
+}
+
+/* ================================= 
+  Media Queries
+==================================== */
+
+@media (min-width: 540px) {
+  .main-header {
+    flex-direction: column;
+  }
+  .main-nav {
+    flex-direction: row;
+  }
+  .col {
+    margin: 3rem 0;
+  }
+}
+
+@media (min-width: 910px) {
+  .main-header,
+  .main-nav,
+  .row {
+    flex-direction: row;
+  }
+  .experience {
+    flex-grow: 1;
+  }
+  .experience h2,
+  .experience ul li {
+    padding-left: 0;
+    text-align: left;
+  }
+}
+/* @media (min-width: 1200px) {
+  .row {
+    max-width: 1200px;
+  }
+} */
