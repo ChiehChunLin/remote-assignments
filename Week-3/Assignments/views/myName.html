@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Web Page Description -->
+    <title>myName</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h1>This is myName.html</h1>
+    <h2 class="msgBox"></h2>
+    <% if (name) { %>
+    <h2>Welcome, <%= name %> !! ☺</h2>
+    <% } else { %>
+    <form>
+      <label for="myName">Please enter your name：</label>
+      <br />
+      <input id="myName" type="text" />
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+    <% } %>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      type="text/javascript"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function () {
+        $("form").submit(setMyName);
+
+        function setMyName(e) {
+          e.preventDefault();
+          const newName = $("#myName").val();
+          const url = `http://localhost:3000/trackName?name=${newName}`;
+          console.log("fetch:" + url);
+
+          const config = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          };
+
+          fetch(url, config)
+            .then(checkStatus)
+            .then((res) => {
+              if (res.redirected) {
+                location.href = res.url;
+                return;
+              } else {
+                return res.json();
+              }
+            })
+            .then((data) => {
+              if (data) {
+                const { message } = data;
+                $(".msgBox").text(message);
+              }
+            })
+            .catch((err) => {
+              $(".msgBox").text(err);
+              console.error("fetch error:", err);
+            });
+        }
+        function checkStatus(response) {
+          if (response.ok) {
+            return Promise.resolve(response);
+          } else {
+            return Promise.reject(new Error(response.statusText));
+          }
+        }
+      });
+    </script>
+    <!-- <script src="../app.js" defer></script> -->
+  </body>
+</html>

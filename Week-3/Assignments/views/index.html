@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="auther" content="ChiehChun (Cherry) Lin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index,follow" />
+    <meta name="rating" content="general" />
+    <base target="_self" />
+    <!-- Web Page Description -->
+    <title>myServer</title>
+    <meta name="description" content="" />
+    <!-- Page Icon -->
+    <link rel="shortcut icon" href="" />
+    <link rel="bookmark" href="" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
+      rel="stylesheet"
+    />
+    <!-- StyleCheet CSS -->
+    <link rel="stylesheet" href="../public/style.css" type="text/css" />
+    <script defer src="../app.js" defer></script>
+  </head>
+  <body>
+    <h1>Hello, My Server!</h1>
+    <% if (message) { %>
+    <h2><%= message %></h2>
+    <% } %>
+  </body>
+</html>

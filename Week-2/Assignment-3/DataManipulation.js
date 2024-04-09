@@ -30,10 +30,25 @@ function count2(input) {
     }
   }
 }
+function count3(input) {
+  const result = [];
+  function helper(arr) {
+    if (arr.length === 0) return;
+
+    const letter = arr[0];
+    const count = arr.filter((val) => val === letter).length;
+    result.push(`${letter}:${count}`);
+    const newArr = arr.filter((val) => val !== letter);
+    helper(newArr);
+  }
+  helper(input);
+  return `{${result.join(", ")}}`;
+}
 
 let input1 = ["a", "b", "c", "a", "c", "a", "x"];
 console.log(count(input1)); // should print {a:3, b:1, c:2, x:1}
 console.log(count2(input1)); // should print {a:3, b:1, c:2, x:1}
+console.log(count3(input1)); // should print {a:3, b:1, c:2, x:1}
 
 function groupByKey(input) {
   //your code here
