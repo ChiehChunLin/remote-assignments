@@ -38,7 +38,7 @@ app.get("/myName", (req, res) => {
   res.render("myName", { name });
 });
 
-app.post("/trackName", (req, res) => {
+app.get("/trackName", (req, res) => {
   let { name } = req.query;
   console.log("post:" + name);
 
@@ -72,7 +72,9 @@ app.get("/data", (req, res) => {
 });
 
 app.post("/data", (req, res) => {
-  let { number } = req.query;
+  // let { number } = req.query;  // value from url
+  let { number } = req.body; // value from post method
+
   console.log("post:" + number);
   if (number === undefined) {
     res.send({ message: `Lack of Parameter` });

@@ -1,6 +1,14 @@
 //-------------------------------------
 //------   DOM Event Handler ----------
 //--------------------------------------
+// document.addEventListener("DOMContentLoaded", function () {
+
+// });
+
+// $(document).ready(function () {
+
+// });
+
 $(".mySumForm").submit(calculation);
 $(".myNameForm").submit(setMyName);
 
@@ -10,14 +18,7 @@ function setMyName(e) {
   const url = `http://localhost:3000/trackName?name=${newName}`;
   console.log("fetch:" + url);
 
-  const config = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  fetch(url, config)
+  fetch(url)
     .then(checkStatus)
     .then((res) => {
       if (res.redirected) {
@@ -49,6 +50,7 @@ function calculation(e) {
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ number }),
   };
 
   fetch(url, config)
