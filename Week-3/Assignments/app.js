@@ -5,7 +5,6 @@ const path = require("path");
 
 const appPort = 3000;
 const app = express();
-app.use("/public", express.static("public"));
 app.use(express.static("public"));
 app.set("view engine", "html");
 app.engine("html", require("ejs").renderFile);
@@ -26,6 +25,7 @@ function checkCalculationLimit(val) {
   if (val > limit) return false;
   return true;
 }
+
 //---------------------------------
 //------      Routes --------------
 //---------------------------------
