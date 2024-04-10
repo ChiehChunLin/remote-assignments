@@ -6,6 +6,53 @@
     <!-- Web Page Description -->
     <title>mySumPage</title>
     <link rel="stylesheet" href="./style.css" />
+    <script
+      defer
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      type="text/javascript"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script defer>
+      document.addEventListener("DOMContentLoaded", function () {
+        $(document).ready(function () {
+          $("form").submit(calculation);
+
+          function calculation(e) {
+            e.preventDefault();
+            const number = $("#myNumber").val();
+            const url = `http://localhost:3000/data?number=${number}`;
+            console.log("fetch:" + url);
+
+            const config = {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            };
+
+            fetch(url, config)
+              .then(checkStatus)
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+                const { message } = data;
+                $(".msgBox").text(message);
+              })
+              .catch((err) => {
+                console.error("fetch error:", err);
+              });
+          }
+          function checkStatus(response) {
+            if (response.ok) {
+              return Promise.resolve(response);
+            } else {
+              return Promise.reject(new Error(response.statusText));
+            }
+          }
+        });
+      });
+    </script>
   </head>
   <body>
     <h1>This is sum.html</h1>
@@ -19,49 +66,5 @@
       <br />
       <button type="submit">Submit</button>
     </form>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.min.js"
-      type="text/javascript"
-      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      $(document).ready(function () {
-        $("form").submit(calculation);
-
-        function calculation(e) {
-          e.preventDefault();
-          const number = $("#myNumber").val();
-          const url = `http://localhost:3000/data?number=${number}`;
-          console.log("fetch:" + url);
-
-          const config = {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          };
-
-          fetch(url, config)
-            .then(checkStatus)
-            .then((res) => res.json())
-            .then((data) => {
-              console.log(data);
-              const { message } = data;
-              $(".msgBox").text(message);
-            })
-            .catch((err) => {
-              console.error("fetch error:", err);
-            });
-        }
-        function checkStatus(response) {
-          if (response.ok) {
-            return Promise.resolve(response);
-          } else {
-            return Promise.reject(new Error(response.statusText));
-          }
-        }
-      });
-    </script>
   </body>
 </html>
