@@ -1,10 +1,12 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const path = require("path");
-
-const appPort = 3000;
+const dotenv = require("dotenv");
+const session = require("express-session");
+const flash = require("connect-flash");
 const app = express();
+dotenv.config();
+
 app.use(express.static("public"));
 app.set("view engine", "html");
 app.engine("html", require("ejs").renderFile);
@@ -12,6 +14,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(flash());
 
 function checkCalculationLimit(val) {
   // In JavaScript, the Number type represents all numeric values, including integers and floating-point numbers,
@@ -30,69 +40,75 @@ function checkCalculationLimit(val) {
 //------      Routes --------------
 //---------------------------------
 app.get("/", (req, res) => {
-  res.render("index", { message: undefined });
+  const message = req.flash("message");
+  res.render("index", { message });
 });
 
 app.get("/myName", (req, res) => {
   const { name } = req.cookies;
-  res.render("myName", { name });
+  const message = req.flash("message");
+  res.render("myName", { name, message });
 });
 
-app.get("/trackName", (req, res) => {
-  let { name } = req.query;
+app.post("/trackName", (req, res) => {
+  // const { name } = req.query;  //use fetch get url
+  const { name } = req.body;
   console.log("post:" + name);
-
-  if (name) {
-    res.cookie("name", name);
-    res.redirect("/myName");
+  if (name.trim() !== "") {
+    res.cookie("name", name.trim());
   } else {
-    res.send({ message: `newName: ${name} Error!` });
+    req.flash("message", "New Name Error!");
   }
+  res.redirect("/myName");
 });
 
 app.get("/data", (req, res) => {
   const { number } = req.query;
   if (number === undefined) {
-    res.render("index", { message: `Lack of Parameter` });
+    req.flash("message", "Lack of Parameter");
   } else {
     const n = Number(number);
     if (Number.isInteger(n) && n > 0) {
       //(Optional)Think about what will happen when N is very large
       if (!checkCalculationLimit(n)) {
-        res.render("index", {
-          message: `The maximun input should less than 10^7 for precision`,
-        });
+        req.flash(
+          "message",
+          "The maximun input should less than 10^7 for precision"
+        );
+      } else {
+        const result = (((1 + n) * n) / 2).toFixed(0);
+        req.flash("message", `The result: ${result}`);
       }
-      const result = (((1 + n) * n) / 2).toFixed(0);
-      res.render("index", { message: `The result: ${result}` });
     } else {
-      res.render("index", { message: `Wrong Parameter` });
+      req.flash("message", "Wrong Parameter");
     }
   }
+  res.redirect("/");
 });
 
 app.post("/data", (req, res) => {
   // let { number } = req.query;  // value from url
   let { number } = req.body; // value from post method
+  let message = undefined;
 
   console.log("post:" + number);
   if (number === undefined) {
-    res.send({ message: `Lack of Parameter` });
+    message = `Lack of Parameter`;
   } else {
     const n = Number(number);
     if (Number.isInteger(n) && n > 0) {
       //(Optional)Think about what will happen when N is very large
       if (!checkCalculationLimit(n)) {
-        res.send({
-          message: `The maximun input should less than 10^7 for precision`,
-        });
+        message = `The maximun input should less than 10^7 for precision`;
+      } else {
+        const result = (((1 + n) * n) / 2).toFixed(0);
+        message = `The result: ${result}`;
       }
-      const result = (((1 + n) * n) / 2).toFixed(0);
-      res.send({ message: `The result: ${result}` });
     } else {
-      res.send({ message: `Wrong Parameter` });
+      message = `Wrong Parameter`;
     }
   }
+  res.send({ message });
 });
 
 app.use((req, res, next) => {
@@ -102,14 +118,15 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  console.log(err);
   res.locals.error = err;
   const status = err.status || 500;
-  res.status(status);
-  res.send({ message: `Oops!! Server Error !!!!` });
+  res.status(status).send({ message: `Oops!! ${err}` });
 });
 
-app.listen(appPort, () => {
-  console.log(`Server running on port ${appPort}.`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });
 
 //-----------------------------------

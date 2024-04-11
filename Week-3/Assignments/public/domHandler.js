@@ -2,15 +2,11 @@
 //------   DOM Event Handler ----------
 //--------------------------------------
 // document.addEventListener("DOMContentLoaded", function () {
-
-// });
-
-// $(document).ready(function () {
-
+//   $(document).ready(function () {});
 // });
 
 $(".mySumForm").submit(calculation);
-$(".myNameForm").submit(setMyName);
+// $(".myNameForm").submit(setMyName);
 
 function setMyName(e) {
   e.preventDefault();

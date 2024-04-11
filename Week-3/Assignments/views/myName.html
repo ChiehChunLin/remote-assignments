@@ -7,7 +7,6 @@
     <title>myName</title>
     <link rel="stylesheet" href="./style.css" />
     <script
-      defer
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       type="text/javascript"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -17,14 +16,15 @@
   </head>
   <body>
     <h1>This is myName.html</h1>
-    <h2 class="msgBox"></h2>
+    <h2 class="msgBox"><% if (message) { %> <%= message %><% } %></h2>
     <% if (name) { %>
     <h2>Welcome, <%= name %> !! ☺</h2>
     <% } else { %>
-    <form class="myNameForm">
+    <form class="myNameForm" action="/trackName" method="POST">
+      <!-- <form class="myNameForm"> -->
       <label for="myName">Please enter your name：</label>
       <br />
-      <input id="myName" type="text" />
+      <input id="myName" type="text" name="name" />
       <br />
       <button type="submit">Submit</button>
     </form>
