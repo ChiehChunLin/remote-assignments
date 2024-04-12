@@ -66,21 +66,21 @@ app.get("/data", (req, res) => {
   const { number } = req.query;
   if (number === undefined) {
     req.flash("message", "Lack of Parameter");
+  } else if (Number.isNaN(parseInt(number))) {
+    req.flash("message", "Wrong Parameter");
+  } else if (Number(number) < 1) {
+    req.flash("message", "Wrong Parameter");
   } else {
     const n = Number(number);
-    if (Number.isInteger(n) && n > 0) {
-      //(Optional)Think about what will happen when N is very large
-      if (!checkCalculationLimit(n)) {
-        req.flash(
-          "message",
-          "The maximun input should less than 10^7 for precision"
-        );
-      } else {
-        const result = (((1 + n) * n) / 2).toFixed(0);
-        req.flash("message", `The result: ${result}`);
-      }
+    //(Optional)Think about what will happen when N is very large
+    if (!checkCalculationLimit(n)) {
+      req.flash(
+        "message",
+        "The maximun input should less than 10^7 for precision"
+      );
     } else {
-      req.flash("message", "Wrong Parameter");
+      const result = (((1 + n) * n) / 2).toFixed(0);
+      req.flash("message", `The result: ${result}`);
     }
   }
   res.redirect("/");
@@ -93,19 +93,19 @@ app.post("/data", (req, res) => {
 
   console.log("post:" + number);
   if (number === undefined) {
-    message = `Lack of Parameter`;
+    message = "Lack of Parameter";
+  } else if (Number.isNaN(parseInt(number))) {
+    message = "Wrong Parameter";
+  } else if (Number(number) < 1) {
+    message = "Wrong Parameter";
   } else {
     const n = Number(number);
-    if (Number.isInteger(n) && n > 0) {
-      //(Optional)Think about what will happen when N is very large
-      if (!checkCalculationLimit(n)) {
-        message = `The maximun input should less than 10^7 for precision`;
-      } else {
-        const result = (((1 + n) * n) / 2).toFixed(0);
-        message = `The result: ${result}`;
-      }
+    //(Optional)Think about what will happen when N is very large
+    if (!checkCalculationLimit(n)) {
+      message = "The maximun input should less than 10^7 for precision";
     } else {
-      message = `Wrong Parameter`;
+      const result = (((1 + n) * n) / 2).toFixed(0);
+      message = `The result: ${result}`;
     }
   }
   res.send({ message });
