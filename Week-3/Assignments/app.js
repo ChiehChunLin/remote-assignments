@@ -132,6 +132,7 @@ app.listen(PORT, () => {
 //-----------------------------------
 //----------- Assignment-5 ----------
 //-----------------------------------
+//method-1 BigO = O(n^2)
 function twoSum(nums, target) {
   for (let i = 0; i < nums.length; i++) {
     for (let j = i; j < nums.length; j++) {
@@ -141,5 +142,22 @@ function twoSum(nums, target) {
     }
   }
 }
+//method-2 BigO = O(n)
+function twoSum2(nums, target) {
+  const numIndices = {};
+
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i];
+    if (numIndices.hasOwnProperty(complement)) {
+      return [numIndices[complement], i];
+    }
+    numIndices[nums[i]] = i;
+    console.log(numIndices);
+  }
+  // If no solution is found
+  return [];
+}
 const result = twoSum([2, 7, 11, 15], 9);
+const result2 = twoSum2([2, 7, 11, 15], 22);
 console.log(result);
+console.log(result2);
