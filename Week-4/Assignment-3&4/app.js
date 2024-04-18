@@ -5,12 +5,12 @@ const profileRoute = require("./routes/profile-route");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("connect-flash");
+const path = require("path");
 const dotenv = require("dotenv");
 const app = express();
 dotenv.config();
 
 app.set("view engine", "ejs");
-app.use("/public", express.static("public"));
 // app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,7 +25,7 @@ app.use(
 app.use(flash());
 app.use(authRoute);
 app.use(profileRoute);
-
+app.use("/public", express.static("public"));
 //---------------------------------
 //------      Routes --------------
 //---------------------------------

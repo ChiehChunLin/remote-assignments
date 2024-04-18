@@ -2,8 +2,8 @@ const router = require("express").Router();
 const { findUser } = require("../db/user-model");
 const { getArticlesByAuthor, getArticleById } = require("../db/article-model");
 
-router.get("/myProfile", async (req, res) => {
-  const username = ""; //req.params.username;
+router.get("/:username/myProfile", async (req, res) => {
+  const username = req.params.username;
   const email = req.cookies.user_account;
   console.log(`username myProfile: ${username} / ${email}`);
   const user = await findUser(email);
@@ -11,7 +11,10 @@ router.get("/myProfile", async (req, res) => {
     req.flash("message", "User account has been expired!");
     res.redirect("/login");
   } else {
-    res.render("profile", { user, message: undefined });
+    res.render("profile", {
+      user,
+      message: undefined,
+    });
   }
 });
 

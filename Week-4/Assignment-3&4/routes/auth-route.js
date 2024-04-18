@@ -1,8 +1,6 @@
-const express = require("express");
-const app = express();
-const router = express.Router();
-// const passport = require("passport");
-// const bcrypt = require("bcrypt");
+const router = require("express").Router();
+const passport = require("passport");
+const bcrypt = require("bcrypt");
 const { newUser, findUser } = require("../db/user-model");
 
 router.get("/login", (req, res) => {
@@ -12,7 +10,6 @@ router.get("/login", (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
   const user = await findUser(email);
   if (!user) {
     req.flash("message", "User account doesn't exit!");
@@ -20,8 +17,7 @@ router.post("/login", async (req, res) => {
   }
   if (user.password === password) {
     res.cookie("user_account", user.email);
-    // res.redirect(`/${user.username}/myProfile`);
-    res.redirect(`/myProfile`);
+    res.redirect(`/${user.username}/myProfile`);
   } else {
     req.flash("message", "Wrong email or password!");
     res.redirect("/login");
@@ -36,13 +32,13 @@ router.get("/signup", (req, res) => {
 router.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
   const user = await findUser(email);
-  console.log("user:" + JSON.stringify(user));
   if (user === undefined) {
     const user = await newUser(username, email, password);
     console.log(`${user.username} register successfully`);
     req.flash("message", "Registration succeeds. You can login now.");
     res.redirect("/login");
   } else {
+    console.log("signup user duplicated:" + JSON.stringify(user));
     req.flash("message", "Email has already been registered.");
     res.redirect("/signup");
   }
