@@ -5,7 +5,7 @@ const saltRounds = 10;
 const { newUser, findUser } = require("../db/user-model");
 
 //---------------------------------
-//------      Functions --------------
+//------      Functions -----------
 //---------------------------------
 function verificationOfPassword(password) {
   //Check Complexity Of Password

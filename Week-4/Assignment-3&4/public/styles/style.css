@@ -50,7 +50,9 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-
+main {
+  flex: 1;
+}
 /* ================================= 
   Base Layout Styles
 ==================================== */
@@ -206,6 +208,7 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 0.1rem 0;
 }
 .from-group label {
   display: inline-block;
@@ -225,6 +228,45 @@ button:hover {
   appearance: none;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+#postForm {
+  border: 1px solid #373d44;
+  border-radius: 0.25rem;
+  padding: 0 1rem;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+#postForm h4 {
+  margin: 0.5rem;
+}
+.postText {
+  border: 1px solid #373d44;
+  border-radius: 0.25rem;
+  width: 100%;
+  padding: 1rem 0;
+  margin: 0.25rem 0;
+}
+.postRow {
+  /* border: 1px dashed blue; */
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.postRow img:hover {
+  cursor: pointer;
+}
+.postText h4,
+.postText p {
+  text-align: left;
+  font-size: medium;
+}
+.postText span {
+  margin-top: 0.1rem;
+  font-size: small;
+  color: grey;
 }
 .btn {
   display: inline-block;

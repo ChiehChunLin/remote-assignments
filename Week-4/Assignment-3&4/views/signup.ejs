@@ -7,7 +7,8 @@
   </head>
   <body>
     <%- include ("partials/headerNav", { user }) %>
-    <main><%- include ("partials/banner", { user }) %>
+    <main>
+      <%- include ("partials/banner", { user }) %>
         <div class="content">
           <% if (message != "") { %>
             <h2 class="message"><%= message %></h2>
@@ -66,7 +67,8 @@
               </div>
               <br />
               <button type="submit" class="btn btn-primary">Submit</button>
-            </form></main>
+            </form>
+    </main>
     <%- include ("partials/footer") %>
   </body>
 </html>

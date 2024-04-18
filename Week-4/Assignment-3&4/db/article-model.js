@@ -17,7 +17,7 @@ async function createArticleTable() {
             \`id\` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             \`author\` VARCHAR(30) NOT NULL,
             \`title\` VARCHAR(65535) NOT NULL,
-            \`article\` VARCHAR(65535) NOT NULL,
+            \`content\` VARCHAR(65535) NOT NULL,
             \`timestamp\` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);`
   );
   if (articleTable) console.log("articleTable is ready for service.");
@@ -43,6 +43,25 @@ async function getArticleById(id) {
     return rows[0];
   }
 }
+async function getArticleByTitle(title) {
+  // const [rows] = await pool.query(
+  //   `
+  //     SELECT *
+  //     FROM article
+  //     WHERE title = ?
+  //     `,
+  //   [title]
+  // );
+  const [rows] = await pool.query(
+    `SELECT * FROM article WHERE title = '${title}'`
+  );
+  if (rows.length == 0) {
+    return undefined;
+  } else {
+    console.log("getArticle:" + JSON.stringify(rows[0]));
+    return rows[0];
+  }
+}
 async function getArticlesByAuthor(author) {
   // const [rows] = await pool.query(
   //   `
@@ -58,9 +77,44 @@ async function getArticlesByAuthor(author) {
   if (rows.length == 0) {
     return undefined;
   } else {
-    const id = rows[0].id;
-    return getArticleById(id);
+    return rows;
   }
 }
 
-module.exports = { getArticlesByAuthor, getArticleById };
+async function newArticle(author, title, content) {
+  const [rows] = await pool.query(
+    `INSERT INTO article (author,title,content)
+    VALUES (?,?,?)
+    `,
+    [author, title, content]
+  );
+  // const [rows] = await pool.query(
+  //   `INSERT INTO user (author,title,content) VALUES ('${author}','${title}','${content}')`
+  // );
+  console.log("newArticle:" + JSON.stringify(rows));
+  if (rows.length == 0) {
+    return undefined;
+  } else {
+    return getArticleByTitle(title);
+  }
+}
+async function findArticles(author, ids) {
+  // const [rows] = await pool.query(
+  //   `
+  // SELECT *
+  // FROM article
+  // WHERE author = ? and id = ?
+  // `,
+  //   [author, id]
+  // );
+  // const [rows] = await pool.query(
+  //   `SELECT * FROM article WHERE author = '${author}' and id = ${ids}`
+  // );
+  console.log("newArticle:" + JSON.stringify(rows));
+  if (rows.length == 0) {
+    return undefined;
+  } else {
+    return getArticleByTitle(title);
+  }
+}
+module.exports = { getArticlesByAuthor, getArticleById, newArticle };

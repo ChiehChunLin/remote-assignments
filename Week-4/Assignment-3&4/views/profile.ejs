@@ -17,8 +17,75 @@
         <h3>Hello! <%= user.username %></a></h3>
         <% } %>
         <br />
-        <div class="content">
-          <!-- put articles here -->
+        <!------------ Write Article Form ------------->          
+        <form id="postForm" action="/postText" method="POST">  
+          <h4>Anything new today?</h4>                
+          <div class="form-group">
+             <input
+                class="form-control"
+                type="text"
+                id="inputTitle"
+                placeholder="Title:"
+                name="title"
+              />
+          </div>
+          <div class="form-group form-content">
+             <textarea
+                class="form-control"
+                type="text"
+                rows="2"
+                id="inputContent"
+                placeholder="Content:"
+                name="content"
+                style="resize:none;"
+              >
+              </textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Post</button> 
+        </form>
+         <!------------  Article History ------------->
+          <div class="postText">
+            <div class="postRow">
+              <h4>Row, row, row your boat</h4>
+              <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
+            </div>
+            <div class="postRow postContent">
+              <p >Row, row, row your boat<br>
+              Gently down the stream<br>
+              Merrily merrily, merrily, merrily<br>
+              Life is but a dream</p>
+            </div>            
+            <div class="postRow">
+              <span>by author</span>
+              <span>timestamp</span>
+            </div>
+          </div>
+          <div class="postText">
+            <div class="postRow">
+              <h4>Ed Sheeran</h4>
+              <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
+            </div>
+            <div class="postRow postContent">
+              <p >Edward Christopher Sheeran MBE (born 17 February 1991) is an English singer-songwriter. Born in Halifax, West Yorkshire, and raised in Framlingham, Suffolk, he began writing songs around the age of eleven. In early 2011, Sheeran independently released the extended play No. 5 Collaborations Project. He signed with Asylum Records the same year. </p>
+            </div>            
+            <div class="postRow">
+              <span>by author</span>
+              <span>timestamp</span>
+            </div>
+          </div>
+          <div class="postText">
+            <div class="postRow">
+              <h4>Taylor Swift</h4>
+              <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
+            </div>
+            <div class="postRow postContent">
+              <p >Taylor Alison Swift (born December 13, 1989) is an American singer-songwriter. A subject of widespread public interest, she has influenced the music industry and popular culture through her artistry, songwriting, and entrepreneurship. She is an advocate of artists' rights and women's empowerment. </p>
+            </div>            
+            <div class="postRow">
+              <span>by author</span>
+              <span>timestamp</span>
+            </div>
+          </div>
         </div>  
       </div>
     </main>

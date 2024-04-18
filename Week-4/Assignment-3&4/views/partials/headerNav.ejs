@@ -7,7 +7,11 @@
     <li><a href="#">生活記事</a></li>
     <li><a href="#">學習筆記</a></li>
     <li><a href="#">閱讀隨筆</a></li>
+    <% if(user) { %>
+    <li><a href="/<%= user.username %>/myProfile">myProfile</a></li>
+    <% } else {%>
     <li><a href="#">作品集</a></li>
+    ><% } %>
   </ul>
   <div class="login">
     <% if(user) { %>
