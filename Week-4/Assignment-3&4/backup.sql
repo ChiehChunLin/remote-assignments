@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 09:12 AM
+-- Generation Time: Apr 18, 2024 at 03:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -57,7 +57,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `authority`, `timestamp`) VALUES
 (1, 'AAA', '111111@fake.com', '$2b$10$LwQhLqQgbUrXY.IuzX28w.aIc93J3.EZkDZ/Ne6hz80fFOXFiucGm', 1, '2024-04-18 07:10:25'),
 (2, 'BBB', '222222@fake.com', '$2b$10$sbpNOyCwVuVSM/blK1p6le8a8OuD.U1r.pdX/WROBUDuy9byjOqgy', 1, '2024-04-18 07:11:38'),
-(3, 'CCC', '333333@fake.com', '$2b$10$reo6zF9M7FjaXeZkow1owu9t.0hQvORPx9tmR.DGTNCR3K.sxQfjW', 1, '2024-04-18 07:12:20');
+(3, 'CCC', '333333@fake.com', '$2b$10$reo6zF9M7FjaXeZkow1owu9t.0hQvORPx9tmR.DGTNCR3K.sxQfjW', 1, '2024-04-18 07:12:20'),
+(4, 'ABCabc123', 'ABCabc123@fake.com', '$2b$10$lIj7eX6viSfPZSP4vLsR0.VjhNLwluri9Lm0X95q/c3FG5Jts1D.2', 1, '2024-04-18 13:30:18');
 
 --
 -- Indexes for dumped tables
@@ -90,7 +91,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

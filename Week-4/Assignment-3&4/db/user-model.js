@@ -28,13 +28,13 @@ createUserTable();
 //----------------          Functions          -------------------
 //----------------------------------------------------------------
 async function getUser(id) {
-  // const [rows] = await pool.query(
-  //   `
-  //   SELECT * FROM user where id = ?
-  //   `,
-  //   [id]
-  // );
-  const [rows] = await pool.query(`SELECT * FROM user where id = ${id}`);
+  const [rows] = await pool.query(
+    `
+    SELECT * FROM user where id = ?
+    `,
+    [id]
+  );
+  // const [rows] = await pool.query(`SELECT * FROM user where id = ${id}`);
   if (rows.length == 0) {
     return undefined;
   } else {
@@ -43,15 +43,15 @@ async function getUser(id) {
   }
 }
 async function getUserByEmail(email) {
-  // const [rows] = await pool.query(
-  //   `
-  //   SELECT * FROM user where email = ?
-  //   `,
-  //   [email]
-  // );
   const [rows] = await pool.query(
-    `SELECT * FROM user where email = '${email}'`
+    `
+    SELECT * FROM user where email = ?
+    `,
+    [email]
   );
+  // const [rows] = await pool.query(
+  //   `SELECT * FROM user where email = '${email}'`
+  // );
   if (rows.length == 0) {
     return undefined;
   } else {
@@ -60,15 +60,15 @@ async function getUserByEmail(email) {
   }
 }
 async function newUser(username, email, password) {
-  // const [rows] = await pool.query(
-  //   `INSERT INTO user (username,email,password)
-  //   VALUES (?,?,?)
-  //   `,
-  //   [username, email, password]
-  // );
   const [rows] = await pool.query(
-    `INSERT INTO user (username,email,password) VALUES ('${username}','${email}','${password}')`
+    `INSERT INTO user (username,email,password)
+    VALUES (?,?,?)
+    `,
+    [username, email, password]
   );
+  // const [rows] = await pool.query(
+  //   `INSERT INTO user (username,email,password) VALUES ('${username}','${email}','${password}')`
+  // );
   console.log("newUser:" + JSON.stringify(rows));
   if (rows.length == 0) {
     return undefined;
@@ -77,17 +77,17 @@ async function newUser(username, email, password) {
   }
 }
 async function findUser(email) {
-  // const [rows] = await pool.query(
-  //   `
-  //     SELECT *
-  //     FROM user
-  //     WHERE email = ?
-  //     `,
-  //   [email]
-  // );
   const [rows] = await pool.query(
-    `SELECT * FROM user WHERE email = '${email}'`
+    `
+      SELECT *
+      FROM user
+      WHERE email = ?
+      `,
+    [email]
   );
+  // const [rows] = await pool.query(
+  //   `SELECT * FROM user WHERE email = '${email}'`
+  // );
   if (rows.length == 0) {
     return undefined;
   } else {
