@@ -17,7 +17,7 @@ async function createUserTable() {
         \`id\` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         \`username\` VARCHAR(30) NOT NULL,
         \`email\` VARCHAR(255) NOT NULL UNIQUE KEY,
-        \`password\` VARCHAR(50) NOT NULL,
+        \`password\` VARCHAR(255) NOT NULL,
         \`authority\` INT(2) NOT NULL DEFAULT 1,
         \`timestamp\` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP);`
   );

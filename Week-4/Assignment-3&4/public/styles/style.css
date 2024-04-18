@@ -46,6 +46,14 @@ button {
 img {
   max-width: 100%;
 }
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex: 1;
+}
 
 /* ================================= 
   Base Layout Styles
@@ -176,7 +184,7 @@ button:hover {
 .main-footer {
   background: #d9e4ea;
   margin-top: 50px;
-  padding-top: 2rem;
+  padding: 1.5rem 0;
 }
 .icons {
   width: 100%;
