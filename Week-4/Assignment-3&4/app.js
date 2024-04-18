@@ -29,9 +29,6 @@ app.use("/public", express.static("public"));
 //---------------------------------
 //------      Routes --------------
 //---------------------------------
-app.get("/", (req, res) => {
-  res.render("index");
-});
 
 app.use((req, res, next) => {
   const err = new Error("Not Found");

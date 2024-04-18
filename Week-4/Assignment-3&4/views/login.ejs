@@ -6,13 +6,13 @@
     <title>haiamcherry | Login</title>
   </head>
   <body>
-    <%- include ("partials/headerNav") %>
+    <%- include ("partials/headerNav", { user }) %>
     <main>
-      <%- include ("partials/banner") %>
-        <% if (message) { %>
+      <%- include ("partials/banner", { user }) %>
+        <% if (message != "") { %>
         <h2 class="message"><%= message %></h2>
         <% } %>
-        <h3>Login Here or <a href="/signup">Sign-up</a></h3>
+        <h3 style="font-size: 2rem;">Login Here or <a href="/signup"><u>Sign-up</u></a></h3>
         <br />
         <div class="col-md-12" hidden>
           <a

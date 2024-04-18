@@ -1,4 +1,9 @@
 <div class="banner">
+  <% if(user) { %>
+  <h1>Welcome, <%= user.username %> !</h1>
+  <span>Let's fun together!</span>
+  <% } else { %>
   <h1>Hi! This is Cherry!</h1>
   <span>Let's work hard, play hard together!</span>
+  <% } %>
 </div>

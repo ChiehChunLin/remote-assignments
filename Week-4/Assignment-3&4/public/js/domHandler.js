@@ -10,7 +10,7 @@ $msgDiv.on("click", function () {
     this.innerHTML =
       "<h1>Hi! This is Cherry!</h1><span>Let's work hard, play hard together!</span>";
   } else {
-    this.innerHTML = "<h1>Have a Good Time!</h1>";
+    this.innerHTML = "<h1>Have a Good Day!</h1>";
   }
 });
 

@@ -10,8 +10,17 @@
     <li><a href="#">作品集</a></li>
   </ul>
   <div class="login">
-    <a href="/login"
-      ><img src="/public/images/user.png" alt="login" title="login"
+    <% if(user) { %>
+    <a href="/logout"
+      ><img
+        style="height: 100%; width: 100%"
+        src="/public/icons/logout_icon.svg"
+        alt="logout"
+        title="logout"
     /></a>
+    <% } else {%>
+    <a href="/login"
+      ><img src="/public/images/user.png" alt="login" title="login" /></a
+    ><% } %>
   </div>
 </header>

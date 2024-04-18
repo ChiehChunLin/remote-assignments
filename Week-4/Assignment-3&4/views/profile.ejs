@@ -6,9 +6,9 @@
     <title>haiamcherry | myProfile</title>
   </head>
   <body>
-    <%- include ("partials/headerNav") %>
+    <%- include ("partials/headerNav", { user }) %>
     <main>
-      <%- include ("partials/banner") %>
+      <%- include ("partials/banner", { user }) %>
       <div class="content">
         <% if (message) { %>
           <h2 class="message"><%= message %></h2>

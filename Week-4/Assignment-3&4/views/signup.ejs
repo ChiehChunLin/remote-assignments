@@ -6,13 +6,13 @@
         <title>haiamcherry | SignUp</title>
   </head>
   <body>
-    <%- include ("partials/headerNav") %>
-    <main><%- include ("partials/banner") %>
+    <%- include ("partials/headerNav", { user }) %>
+    <main><%- include ("partials/banner", { user }) %>
         <div class="content">
-          <% if (message) { %>
+          <% if (message != "") { %>
             <h2 class="message"><%= message %></h2>
             <% } %>
-            <h3>Signup Here or <a href="/login">Login</a></h3>
+            <h3 style="font-size: 2rem;">Signup Here or <a href="/login"><u>Login</u></a></h3>
             <br />
             <form action="/signup" method="POST">
               <div class="form-group">
@@ -23,6 +23,7 @@
                   id="myname"
                   placeholder="please enter username"
                   name="username"
+                  required
                 />
               </div>
               <br />
@@ -32,8 +33,9 @@
                   class="form-control"
                   type="email"
                   id="inputEmail"
-                  placeholder="Enter email"
+                  placeholder="your email"
                   name="email"
+                  required
                 />
               </div>
               <br />
@@ -43,9 +45,24 @@
                   class="form-control"
                   type="password"
                   id="inputPassword"
-                  placeholder="At least one upper letter and one lower letter"
+                  placeholder="Must Contain UpperCase, LowerCase and Numbers"
                   name="password"
+                  required
                 />
+                <div class="showPwBox">
+                  <input id="showPw" type="checkbox" onclick="myFunction()" />                
+                  <label for="showPw">Show Password</label>
+                </div>                
+                <script>
+                  function myFunction() {
+                    var pw = document.getElementById("inputPassword");
+                    if (pw.type == "password") {
+                        pw.type = "text";
+                    } else {
+                        pw.type = "password";
+                    }
+                  }
+                </script>
               </div>
               <br />
               <button type="submit" class="btn btn-primary">Submit</button>
