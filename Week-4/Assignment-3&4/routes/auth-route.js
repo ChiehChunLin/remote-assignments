@@ -5,33 +5,6 @@ const saltRounds = 10;
 const { newUser, findUser } = require("../db/user-model");
 
 //---------------------------------
-//------      Functions -----------
-//---------------------------------
-function verificationOfPassword(password) {
-  //Check Complexity Of Password
-  if (password.length < 8) {
-    return "password should be at least 8 characters.";
-  } else if (!/[A-Z]/.test(password)) {
-    return "password should be at least one UpperCase";
-  } else if (!/[a-z]/.test(password)) {
-    return "password should be at least one LowerCase";
-  } else if (!/\d/.test(password)) {
-    return "password should be at least one Number";
-  } else {
-    return undefined;
-  }
-  // } else if (!/\W/.test(password)) {
-  //   return "password should be at least non-alphas"; //特殊符號
-  // }
-}
-function verificationOfEmail(email) {
-  if (!/[@.]/.test(email)) {
-    return "email without domain address.";
-  } else {
-    return undefined;
-  }
-}
-//---------------------------------
 //------      Routes --------------
 //---------------------------------
 router.get("/", async (req, res) => {
@@ -41,7 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/login", async (req, res) => {
-  const message = req.flash("message");
+  const message = !!req.flash("message") ? req.flash("message") : undefined;
   res.render("login", { user: undefined, message });
 });
 
@@ -63,7 +36,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/signup", (req, res) => {
-  const message = req.flash("message");
+  const message = !!req.flash("message") ? undefined : req.flash("message");
   res.render("signup", { user: undefined, message });
 });
 
@@ -103,5 +76,33 @@ router.get("/logout", (req, res) => {
   req.flash("message", "Logout successfully!");
   res.redirect("/login");
 });
+
+//---------------------------------
+//------      Functions -----------
+//---------------------------------
+function verificationOfPassword(password) {
+  //Check Complexity Of Password
+  if (password.length < 8) {
+    return "password should be at least 8 characters.";
+  } else if (!/[A-Z]/.test(password)) {
+    return "password should be at least one UpperCase";
+  } else if (!/[a-z]/.test(password)) {
+    return "password should be at least one LowerCase";
+  } else if (!/\d/.test(password)) {
+    return "password should be at least one Number";
+  } else {
+    return undefined;
+  }
+  // } else if (!/\W/.test(password)) {
+  //   return "password should be at least non-alphas"; //特殊符號
+  // }
+}
+function verificationOfEmail(email) {
+  if (!/[@.]/.test(email)) {
+    return "email without domain address.";
+  } else {
+    return undefined;
+  }
+}
 
 module.exports = router;

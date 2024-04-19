@@ -43,6 +43,45 @@ async function getArticleById(id) {
     return rows[0];
   }
 }
+
+async function getArticlesByAuthor(author) {
+  // const [rows] = await pool.query(
+  //   `
+  // SELECT *
+  // FROM article
+  // WHERE author = ?
+  // `,
+  //   [author]
+  // );
+  const [rows] = await pool.query(
+    `SELECT * FROM article WHERE author = '${author}'`
+  );
+  if (rows.length == 0) {
+    return undefined;
+  } else {
+    return rows;
+  }
+}
+async function getArticlesByEmail(email) {
+  // const [rows] = await pool.query(
+  //   `
+  // SELECT article.title, article.content, article.timestamp, user.username AS author FROM article
+  // INNER JOIN user ON article.author = user.username
+  // WHERE user.email = ?
+  // `,
+  //   [email]
+  // );
+  const [rows] = await pool.query(
+    `SELECT article.title, article.content, article.timestamp, user.username AS author FROM article 
+     INNER JOIN user ON article.author = user.username 
+     WHERE user.email = ${email}`
+  );
+  if (rows.length == 0) {
+    return undefined;
+  } else {
+    return rows;
+  }
+}
 async function getArticleByTitle(title) {
   // const [rows] = await pool.query(
   //   `
@@ -62,25 +101,6 @@ async function getArticleByTitle(title) {
     return rows[0];
   }
 }
-async function getArticlesByAuthor(author) {
-  // const [rows] = await pool.query(
-  //   `
-  // SELECT *
-  // FROM article
-  // WHERE author = ?
-  // `,
-  //   [author]
-  // );
-  const [rows] = await pool.query(
-    `SELECT * FROM article WHERE author = '${author}'`
-  );
-  if (rows.length == 0) {
-    return undefined;
-  } else {
-    return rows;
-  }
-}
-
 async function newArticle(author, title, content) {
   const [rows] = await pool.query(
     `INSERT INTO article (author,title,content)
@@ -117,4 +137,8 @@ async function findArticles(author, ids) {
     return getArticleByTitle(title);
   }
 }
-module.exports = { getArticlesByAuthor, getArticleById, newArticle };
+module.exports = {
+  getArticlesByAuthor,
+  getArticlesByEmail,
+  newArticle,
+};

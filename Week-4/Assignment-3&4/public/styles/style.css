@@ -239,6 +239,9 @@ button:hover {
 #postForm h4 {
   margin: 0.5rem;
 }
+#postForm input {
+  text-align: left;
+}
 .postText {
   border: 1px solid #373d44;
   border-radius: 0.25rem;

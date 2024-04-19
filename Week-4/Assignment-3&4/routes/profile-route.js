@@ -2,39 +2,46 @@ const router = require("express").Router();
 const { findUser } = require("../db/user-model");
 const {
   getArticlesByAuthor,
-  getArticleById,
+  getArticlesByEmail,
   newArticle,
 } = require("../db/article-model");
 
 //---------------------------------
-//------      Functions -----------
-//---------------------------------
-function refreshArticles() {}
-//---------------------------------
 //------      Routes --------------
 //---------------------------------
+
 router.get("/:username/myProfile", async (req, res) => {
   const email = req.cookies.user_account;
-  const user = await findUser(email);
-  if (user == undefined) {
+  if (email) {
+    const user = await findUser(email);
+    const message = !!req.flash("message") ? req.flash("message") : undefined;
+    res.render("profile", { user, message });
+  } else {
     req.flash("message", "User account has been expired!");
     res.redirect("/login");
-  } else {
-    res.render("profile", {
-      user,
-      message: undefined,
-    });
   }
 });
 
-router.post("/postText", async (req, res) => {
-  const { title, content } = req.body;
+router.get("/getArticles", async (req, res) => {
   const email = req.cookies.user_account;
-  const user = await findUser(email);
-  const article = await newArticle(user.username, title, content);
+  if (email) {
+    // const posts = await getArticlesByEmail(email);
+    const user = await findUser(email);
+    const posts = await getArticlesByAuthor(user.username);
+    res.send({ posts, message: `${posts.length} post(s) up to date!` });
+  } else {
+    req.flash("message", "User account has been expired!");
+    res.redirect("/login");
+  }
+});
+
+router.post("/:username/postText", async (req, res) => {
+  const { title, content } = req.body;
+  const { username } = req.params;
+  const article = await newArticle(username, title, content);
   console.log(`${article.title} posts successfully`);
-  req.flash("message", `${article.title} posts successfully`);
-  res.redirect(`/:username/myProfile`);
+  req.flash("message", `[${article.title}] is posted successfully`);
+  res.redirect(`/${username}/myProfile`);
 });
 
 module.exports = router;
