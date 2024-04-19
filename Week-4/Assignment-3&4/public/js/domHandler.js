@@ -1,3 +1,8 @@
+// const dotenv = require("dotenv");
+// dotenv.config();
+// const PORT = process.env.PORT;
+// error: require is not defined !
+
 //-------------------------------------
 //------   DOM Event Handler ----------
 //--------------------------------------
@@ -26,31 +31,27 @@ $showBtn.on("click", function () {
     this.innerText = "Call to Action";
   }
 });
-// $(".arrowBtn").each(function (index) {
-//   $(this).on("click", function (e) {
-//     const $arrowBtn = $(e.target);
-//     const $postContentDiv = $(e.target.parentNode.parentNode.children[1]);
-//     if ($postContentDiv.is(":hidden")) {
-//       $postContentDiv.show();
-//       $arrowBtn.attr("src", "/public/icons/angle-small-up.svg");
-//     } else {
-//       $postContentDiv.hide();
-//       $arrowBtn.attr("src", "/public/icons/angle-small-down.svg");
-//     }
-//   });
-// });
 
 //-------------------------------------
 //------       Functions     ----------
 //--------------------------------------
-$("#getPosts").on("click", getArticles);
-function getArticles(e) {
+$("#getPosts").on("click", function (e) {
   e.preventDefault();
   //   const articleUrl = `http://localhost:3000/${user.username}/myArticles`;
   const articleUrl = `http://localhost:3000/myArticles`;
   console.log("fetch:" + articleUrl);
+  fetchArticlesAndRender(articleUrl);
+});
+$("#getPostRange").on("click", function (e) {
+  e.preventDefault();
+  //   const articleUrl = `http://localhost:3000/${user.username}/myArticlesByRange`;
+  const articleUrl = `http://localhost:3000/myArticlesByRange`;
+  console.log("fetch:" + articleUrl);
+  fetchArticlesAndRender(articleUrl);
+});
 
-  fetch(articleUrl)
+function fetchArticlesAndRender(url) {
+  fetch(url)
     .then(checkStatus)
     .then((res) => res.json())
     .then((data) => {
@@ -58,7 +59,7 @@ function getArticles(e) {
         const { posts, message } = data;
         if (posts) {
           posts.map((post) => {
-            renderPost(post);
+            renderPosts(post);
           });
         }
         if (message) {
@@ -86,13 +87,13 @@ function getArticles(e) {
       console.error("fetch error:", err);
     });
 }
-function renderPost(post) {
+function renderPosts(post) {
   const containerDiv = document.querySelector(".postContainer");
   const postDiv = document.createElement("div");
   $(postDiv).addClass("postText");
   postDiv.innerHTML = `
       <div class="postRow">
-          <h4>${post.title}</h4>
+          <h4>${post.id}: ${post.title}</h4>
           <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
       </div>
       <div class="postRow postContent" style="display: none;">

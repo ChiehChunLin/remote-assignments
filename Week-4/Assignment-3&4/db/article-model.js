@@ -27,15 +27,15 @@ createArticleTable();
 //----------------          Functions          -------------------
 //----------------------------------------------------------------
 async function getArticleById(id) {
-  // const [rows] = await pool.query(
-  //   `
-  //     SELECT *
-  //     FROM article
-  //     WHERE id = ?
-  //     `,
-  //   [id]
-  // );
-  const [rows] = await pool.query(`SELECT * FROM article WHERE id = ${id}`);
+  const [rows] = await pool.query(
+    `
+      SELECT *
+      FROM article
+      WHERE id = ?
+      `,
+    [id]
+  );
+  // const [rows] = await pool.query(`SELECT * FROM article WHERE id = ${id}`);
   if (rows.length == 0) {
     return undefined;
   } else {
@@ -45,17 +45,17 @@ async function getArticleById(id) {
 }
 
 async function getArticlesByAuthor(author) {
-  // const [rows] = await pool.query(
-  //   `
-  // SELECT *
-  // FROM article
-  // WHERE author = ?
-  // `,
-  //   [author]
-  // );
   const [rows] = await pool.query(
-    `SELECT * FROM article WHERE author = '${author}'`
+    `
+  SELECT *
+  FROM article
+  WHERE author = ?
+  `,
+    [author]
   );
+  // const [rows] = await pool.query(
+  //   `SELECT * FROM article WHERE author = '${author}'`
+  // );
   if (rows.length == 0) {
     return undefined;
   } else {
@@ -65,16 +65,16 @@ async function getArticlesByAuthor(author) {
 async function getArticlesByEmail(email) {
   const [rows] = await pool.query(
     `
-  SELECT article.title, article.content, article.timestamp, user.username AS author FROM article
+  SELECT article.* FROM article
   INNER JOIN user ON article.author = user.username
   WHERE user.email = ?
   `,
     [email]
   );
   // const [rows] = await pool.query(
-  //   `SELECT article.title, article.content, article.timestamp, user.username AS author FROM article
-  //    INNER JOIN user ON article.author = user.username
-  //    WHERE user.email = '${email}'`
+  //   `SELECT article.* FROM article
+  //  INNER JOIN user ON article.author = user.username
+  //  WHERE user.email = '${email}'`
   // );
   if (rows.length == 0) {
     return undefined;
@@ -83,17 +83,17 @@ async function getArticlesByEmail(email) {
   }
 }
 async function getArticleByTitle(title) {
-  // const [rows] = await pool.query(
-  //   `
-  //     SELECT *
-  //     FROM article
-  //     WHERE title = ?
-  //     `,
-  //   [title]
-  // );
   const [rows] = await pool.query(
-    `SELECT * FROM article WHERE title = '${title}'`
+    `
+      SELECT *
+      FROM article
+      WHERE title = ?
+      `,
+    [title]
   );
+  // const [rows] = await pool.query(
+  //   `SELECT * FROM article WHERE title = '${title}'`
+  // );
   if (rows.length == 0) {
     return undefined;
   } else {
@@ -118,27 +118,27 @@ async function newArticle(author, title, content) {
     return getArticleByTitle(title);
   }
 }
-async function findArticles(author, ids) {
+async function findArticlesByIdRange(startId, endId) {
+  const [rows] = await pool.query(
+    `
+  SELECT *
+  FROM article
+  WHERE id BETWEEN ? AND ?
+  `,
+    [startId, endId]
+  );
   // const [rows] = await pool.query(
-  //   `
-  // SELECT *
-  // FROM article
-  // WHERE author = ? and id = ?
-  // `,
-  //   [author, id]
+  //   `SELECT * FROM article WHERE id BETWEEN ${startId} AND ${endId} `
   // );
-  // const [rows] = await pool.query(
-  //   `SELECT * FROM article WHERE author = '${author}' and id = ${ids}`
-  // );
-  console.log("findArticle:" + JSON.stringify(rows));
+  // console.log("findArticle:" + JSON.stringify(rows));
   if (rows.length == 0) {
     return undefined;
   } else {
-    return getArticleByTitle(title);
+    return rows;
   }
 }
 module.exports = {
-  getArticlesByAuthor,
   getArticlesByEmail,
   newArticle,
+  findArticlesByIdRange,
 };
