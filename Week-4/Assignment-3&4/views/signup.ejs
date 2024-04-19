@@ -7,10 +7,10 @@
   </head>
   <body>
     <%- include ("partials/headerNav", { user }) %>
-    <main>
-      <%- include ("partials/banner", { user }) %>
-        <div class="content">
-            <%- include ("partials/message", { message }) %>
+    <%- include ("partials/banner", { user }) %>
+    <main>      
+      <%- include ("partials/message", { message }) %>
+      <div class="content">   
             <h3 style="font-size: 2rem;">Signup Here or <a href="/login"><u>Login</u></a></h3>
             <br />
             <form action="/signup" method="POST">

@@ -14,8 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/login", async (req, res) => {
-  console.log("flash:" + !req.flash("message"));
-  const message = !req.flash("message") ? req.flash("message") : undefined;
+  const message = req.flash("message");
   res.render("login", { user: undefined, message });
 });
 

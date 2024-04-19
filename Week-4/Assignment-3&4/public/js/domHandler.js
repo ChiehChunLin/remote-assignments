@@ -32,35 +32,61 @@ $showBtn.on("click", function () {
   }
 });
 
+$(".arrowBtn").each(function (index) {
+  $(this).on("click", function (e) {
+    const $arrowBtn = $(e.target);
+    const $postContentDiv = $(e.target.parentNode.parentNode.children[1]);
+    if ($postContentDiv.is(":hidden")) {
+      $postContentDiv.show();
+      $arrowBtn.attr("src", "/public/icons/angle-small-up.svg");
+    } else {
+      $postContentDiv.hide();
+      $arrowBtn.attr("src", "/public/icons/angle-small-down.svg");
+    }
+  });
+});
 //-------------------------------------
 //------       Functions     ----------
 //--------------------------------------
 $("#getPosts").on("click", function (e) {
   e.preventDefault();
-  //   const articleUrl = `http://localhost:3000/${user.username}/myArticles`;
-  const articleUrl = `http://localhost:3000/myArticles`;
-  console.log("fetch:" + articleUrl);
-  fetchArticlesAndRender(articleUrl);
+  //   const url = `http://localhost:3000/${user.username}/myArticles`;
+  const url = `http://localhost:3000/myArticles`;
+  console.log("fetch:" + url);
+  fetchArticlesAndRender(url);
 });
 $("#getPostRange").on("click", function (e) {
   e.preventDefault();
-  //   const articleUrl = `http://localhost:3000/${user.username}/myArticlesByRange`;
-  const articleUrl = `http://localhost:3000/myArticlesByRange`;
-  console.log("fetch:" + articleUrl);
-  fetchArticlesAndRender(articleUrl);
+  //   const url = `http://localhost:3000/${user.username}/myArticlesByRange`;
+  const url = `http://localhost:3000/myArticlesByRange`;
+  console.log("fetch:" + url);
+  fetchArticlesAndRender(url);
 });
 
 function fetchArticlesAndRender(url) {
   fetch(url)
     .then(checkStatus)
-    .then((res) => res.json())
+    .then((res) => {
+      if (res.redirected) {
+        location.href = res.url;
+        return;
+      } else {
+        return res.json();
+      }
+    })
     .then((data) => {
       if (data) {
         const { posts, message } = data;
         if (posts) {
-          posts.map((post) => {
-            renderPosts(post);
-          });
+          const containerDiv = document.querySelector(".postContainer");
+          containerDiv.innerHTML = "";
+          // $(".postContainer").innerHTML = ""; //jquery 無效，只有DOM有用 = ="
+          posts
+            .slice(0)
+            .reverse()
+            .map((post) => {
+              renderPosts(post);
+            });
         }
         if (message) {
           $(".message").text(message);

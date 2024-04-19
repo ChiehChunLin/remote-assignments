@@ -68,13 +68,15 @@ async function getArticlesByEmail(email) {
   SELECT article.* FROM article
   INNER JOIN user ON article.author = user.username
   WHERE user.email = ?
+  ORDER BY id ASC
   `,
     [email]
   );
   // const [rows] = await pool.query(
   //   `SELECT article.* FROM article
   //  INNER JOIN user ON article.author = user.username
-  //  WHERE user.email = '${email}'`
+  //  WHERE user.email = '${email}'
+  // ORDER BY id DESC`
   // );
   if (rows.length == 0) {
     return undefined;
@@ -124,6 +126,7 @@ async function findArticlesByIdRange(startId, endId) {
   SELECT *
   FROM article
   WHERE id BETWEEN ? AND ?
+  ORDER BY id ASC
   `,
     [startId, endId]
   );

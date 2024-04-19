@@ -7,10 +7,11 @@
   </head>
   <body>
     <%- include ("partials/headerNav", { user }) %>
+    <!--------------- banner ------------------ -->
+    <%- include ("partials/banner", { user }) %>
     <main>
-      <%- include ("partials/banner", { user }) %>
+      <%- include ("partials/message", { message }) %>
       <div class="content">
-        <%- include ("partials/message", { message }) %>
         <h3 style="font-size: 2rem">
           Login Here or <a href="/signup"><u>Sign-up</u></a>
         </h3>
@@ -40,6 +41,7 @@
               id="inputEmail"
               placeholder="Enter email"
               name="email"
+              required
             />
           </div>
           <br />
@@ -51,7 +53,22 @@
               id="inputPassword"
               placeholder="At least one upper letter and one lower letter"
               name="password"
+              required
             />
+            <div class="showPwBox">
+              <input id="showPw" type="checkbox" onclick="myFunction()" />
+              <label for="showPw">Show Password</label>
+            </div>
+            <script>
+              function myFunction() {
+                var pw = document.getElementById("inputPassword");
+                if (pw.type == "password") {
+                  pw.type = "text";
+                } else {
+                  pw.type = "password";
+                }
+              }
+            </script>
           </div>
           <br />
           <button type="submit" class="btn btn-primary">Login</button>
