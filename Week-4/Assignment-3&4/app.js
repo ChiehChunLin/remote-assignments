@@ -1,7 +1,7 @@
 const express = require("express");
 const authRoute = require("./routes/auth-route");
 const profileRoute = require("./routes/profile-route");
-// const cors = require("cors");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -11,7 +11,7 @@ const app = express();
 dotenv.config();
 
 app.set("view engine", "ejs");
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -20,6 +20,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: { maxAge: 60000, secure: true },
   })
 );
 app.use(flash());

@@ -1,6 +1,28 @@
-$("#setPost").submit();
-$("#getPosts").submit(getArticles);
+const dotenv = require("dotenv");
+dotenv.config();
+const PORT = process.env.PORT;
 
+//-------------------------------------
+//------   DOM Event Handler ----------
+//--------------------------------------
+$(".arrowBtn").each(function (index) {
+  $(this).on("click", function (e) {
+    const $arrowBtn = $(e.target);
+    const $postContentDiv = $(e.target.parentNode.parentNode.children[1]);
+    console.log($postContentDiv);
+    if ($postContentDiv.is(":hidden")) {
+      $postContentDiv.show();
+      $arrowBtn.attr("src", "/public/icons/angle-small-up.svg");
+    } else {
+      $postContentDiv.hide();
+      $arrowBtn.attr("src", "/public/icons/angle-small-down.svg");
+    }
+  });
+});
+//-------------------------------------
+//------       Functions     ----------
+//--------------------------------------
+$("#getPosts").on("click", getArticles);
 function getArticles(e) {
   e.preventDefault();
   //   const articleUrl = `http://localhost:3000/${user.username}/myArticles`;

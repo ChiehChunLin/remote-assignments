@@ -239,7 +239,8 @@ button:hover {
 #postForm h4 {
   margin: 0.5rem;
 }
-#postForm input {
+#postForm input,
+#postForm textarea {
   text-align: left;
 }
 .postText {

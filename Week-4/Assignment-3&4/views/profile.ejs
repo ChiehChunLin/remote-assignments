@@ -10,9 +10,7 @@
     <main>
       <%- include ("partials/banner", { user }) %>
       <div class="content">
-        <% if (message) { %>
-          <h2 class="message"><%= message %></h2>
-          <% } %>
+        <%- include ("partials/message", { message }) %>
         <% if (user) { %>
             <h3>Hello! <%= user.username %></a></h3>
             <!------------ Write Article Form ------------->          
@@ -44,49 +42,49 @@
             <button type="submit" id="getPosts" class="btn btn-primary">Refresh Posts</button> 
             <!------------  Article History ------------->
             <div class="postContainer">
-                <div class="postText">
-                  <div class="postRow">
-                    <h4>Row, row, row your boat</h4>
-                    <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
-                  </div>
-                  <div class="postRow postContent" hidden>
-                    <p >Row, row, row your boat<br>
-                      Gently down the stream<br>
-                      Merrily merrily, merrily, merrily<br>
-                      Life is but a dream</p>
-                  </div>            
-                  <div class="postRow">
-                    <span>by author</span>
-                    <span>timestamp</span>
-                  </div>
+              <!-- <div class="postText">
+                <div class="postRow">
+                  <h4>Row, row, row your boat</h4>
+                  <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
                 </div>
-                <div class="postText">
-                  <div class="postRow">
-                    <h4>Ed Sheeran</h4>
-                    <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
-                  </div>
-                  <div class="postRow postContent" hidden>
-                    <p >Edward Christopher Sheeran MBE (born 17 February 1991) is an English singer-songwriter. Born in Halifax, West Yorkshire, and raised in Framlingham, Suffolk, he began writing songs around the age of eleven. In early 2011, Sheeran independently released the extended play No. 5 Collaborations Project. He signed with Asylum Records the same year. </p>
-                  </div>            
-                  <div class="postRow">
-                    <span>by author</span>
-                    <span>timestamp</span>
-                  </div>
+                <div class="postRow postContent" style="display: none;">
+                  <p >Row, row, row your boat<br>
+                    Gently down the stream<br>
+                    Merrily merrily, merrily, merrily<br>
+                    Life is but a dream</p>
+                </div>            
+                <div class="postRow">
+                  <span>by author</span>
+                  <span>timestamp</span>
                 </div>
-                <div class="postText">
-                  <div class="postRow">
-                    <h4>Taylor Swift</h4>
-                    <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
-                  </div>
-                  <div class="postRow postContent" hidden>
-                    <p >Taylor Alison Swift (born December 13, 1989) is an American singer-songwriter. A subject of widespread public interest, she has influenced the music industry and popular culture through her artistry, songwriting, and entrepreneurship. She is an advocate of artists' rights and women's empowerment. </p>
-                  </div>            
-                  <div class="postRow">
-                    <span>by author</span>
-                    <span>timestamp</span>
-                  </div>
+              </div>
+              <div class="postText">
+                <div class="postRow">
+                  <h4>Ed Sheeran</h4>
+                  <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
                 </div>
-            </div>            
+                <div class="postRow postContent" style="display: none;">
+                  <p >Edward Christopher Sheeran MBE (born 17 February 1991) is an English singer-songwriter. Born in Halifax, West Yorkshire, and raised in Framlingham, Suffolk, he began writing songs around the age of eleven. In early 2011, Sheeran independently released the extended play No. 5 Collaborations Project. He signed with Asylum Records the same year. </p>
+                </div>            
+                <div class="postRow">
+                  <span>by author</span>
+                  <span>timestamp</span>
+                </div>
+              </div>
+              <div class="postText">
+                <div class="postRow">
+                  <h4>Taylor Swift</h4>
+                  <img class="arrowBtn" src="/public/icons/angle-small-down.svg" style="height:23px;width:23px" alt="down">
+                </div>
+                <div class="postRow postContent" style="display: none;">
+                  <p >Taylor Alison Swift (born December 13, 1989) is an American singer-songwriter. A subject of widespread public interest, she has influenced the music industry and popular culture through her artistry, songwriting, and entrepreneurship. She is an advocate of artists' rights and women's empowerment. </p>
+                </div>            
+                <div class="postRow">
+                  <span>by author</span>
+                  <span>timestamp</span>
+                </div>
+              </div> -->
+           </div>              
         <% } %>
       </div>  
     </main>

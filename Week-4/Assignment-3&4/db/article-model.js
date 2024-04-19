@@ -39,7 +39,7 @@ async function getArticleById(id) {
   if (rows.length == 0) {
     return undefined;
   } else {
-    console.log("getArticle:" + JSON.stringify(rows[0]));
+    // console.log("getArticle:" + JSON.stringify(rows[0]));
     return rows[0];
   }
 }
@@ -63,19 +63,19 @@ async function getArticlesByAuthor(author) {
   }
 }
 async function getArticlesByEmail(email) {
-  // const [rows] = await pool.query(
-  //   `
-  // SELECT article.title, article.content, article.timestamp, user.username AS author FROM article
-  // INNER JOIN user ON article.author = user.username
-  // WHERE user.email = ?
-  // `,
-  //   [email]
-  // );
   const [rows] = await pool.query(
-    `SELECT article.title, article.content, article.timestamp, user.username AS author FROM article 
-     INNER JOIN user ON article.author = user.username 
-     WHERE user.email = ${email}`
+    `
+  SELECT article.title, article.content, article.timestamp, user.username AS author FROM article
+  INNER JOIN user ON article.author = user.username
+  WHERE user.email = ?
+  `,
+    [email]
   );
+  // const [rows] = await pool.query(
+  //   `SELECT article.title, article.content, article.timestamp, user.username AS author FROM article
+  //    INNER JOIN user ON article.author = user.username
+  //    WHERE user.email = '${email}'`
+  // );
   if (rows.length == 0) {
     return undefined;
   } else {
@@ -97,7 +97,7 @@ async function getArticleByTitle(title) {
   if (rows.length == 0) {
     return undefined;
   } else {
-    console.log("getArticle:" + JSON.stringify(rows[0]));
+    // console.log("getArticle:" + JSON.stringify(rows[0]));
     return rows[0];
   }
 }
@@ -111,7 +111,7 @@ async function newArticle(author, title, content) {
   // const [rows] = await pool.query(
   //   `INSERT INTO user (author,title,content) VALUES ('${author}','${title}','${content}')`
   // );
-  console.log("newArticle:" + JSON.stringify(rows));
+  // console.log("newArticle:" + JSON.stringify(rows));
   if (rows.length == 0) {
     return undefined;
   } else {
@@ -130,7 +130,7 @@ async function findArticles(author, ids) {
   // const [rows] = await pool.query(
   //   `SELECT * FROM article WHERE author = '${author}' and id = ${ids}`
   // );
-  console.log("newArticle:" + JSON.stringify(rows));
+  console.log("findArticle:" + JSON.stringify(rows));
   if (rows.length == 0) {
     return undefined;
   } else {

@@ -38,7 +38,7 @@ async function getUser(id) {
   if (rows.length == 0) {
     return undefined;
   } else {
-    console.log("getUser:" + JSON.stringify(rows[0]));
+    // console.log("getUser:" + JSON.stringify(rows[0]));
     return rows[0];
   }
 }
@@ -55,7 +55,7 @@ async function getUserByEmail(email) {
   if (rows.length == 0) {
     return undefined;
   } else {
-    console.log("getUser:" + JSON.stringify(rows[0]));
+    // console.log("getUser:" + JSON.stringify(rows[0]));
     return rows[0];
   }
 }

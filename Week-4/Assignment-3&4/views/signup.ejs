@@ -10,9 +10,7 @@
     <main>
       <%- include ("partials/banner", { user }) %>
         <div class="content">
-          <% if (message != "") { %>
-            <h2 class="message"><%= message %></h2>
-            <% } %>
+            <%- include ("partials/message", { message }) %>
             <h3 style="font-size: 2rem;">Signup Here or <a href="/login"><u>Login</u></a></h3>
             <br />
             <form action="/signup" method="POST">
