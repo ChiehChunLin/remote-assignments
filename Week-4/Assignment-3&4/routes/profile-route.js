@@ -23,13 +23,27 @@ router.get("/:username/myProfile", async (req, res) => {
   }
 });
 
+router.post("/postText", async (req, res) => {
+  const email = req.cookies.user_account;
+  if (email) {
+    const { username, title, content } = req.body;
+    const article = await newArticle(username, title, content);
+    res.send({
+      posts: [article],
+      message: `[${article.title}] is posted successfully`,
+    });
+  } else {
+    console.log("redirect login");
+    req.flash("message", "User account has been expired!");
+    res.redirect("/login");
+  }
+});
+
 router.get("/myArticles", async (req, res) => {
   const email = req.cookies.user_account;
-  console.log(email);
   if (email) {
     console.log("getPosts");
     const posts = await getArticlesByEmail(email);
-    // console.log(posts);
     res.send({ posts, message: `${posts.length} post(s) up to date!` });
   } else {
     console.log("redirect login");
@@ -46,15 +60,6 @@ router.get("/myArticlesByRange", async (req, res) => {
     req.flash("message", "User account has been expired!");
     res.redirect("/login");
   }
-});
-
-router.post("/:username/postText", async (req, res) => {
-  const { title, content } = req.body;
-  const { username } = req.params;
-  const article = await newArticle(username, title, content);
-  const message = `[${article.title}] is posted successfully`;
-  req.flash("message", message);
-  res.redirect(`/${username}/myProfile`);
 });
 
 module.exports = router;

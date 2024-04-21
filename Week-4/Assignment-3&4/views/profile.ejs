@@ -10,11 +10,11 @@
     <%- include ("partials/banner", { user }) %>
     <main>      
       <%- include ("partials/message", { message }) %>
-      <div class="content">        
+      <div class="content">
         <% if (user) { %>
             <h3>Hello! <%= user.username %></a></h3>
-            <!------------ Write Article Form ------------->          
-            <form id="postForm" action="/<%= user.username %>/postText" method="POST">  
+            <!------------ Write Article Form ------------->       
+            <form id="postForm">
               <h4>Anything new today?</h4>                
               <div class="form-group">
                 <input

@@ -1,8 +1,3 @@
-// const dotenv = require("dotenv");
-// dotenv.config();
-// const PORT = process.env.PORT;
-// error: require is not defined !
-
 //-------------------------------------
 //------   DOM Event Handler ----------
 //--------------------------------------
@@ -48,23 +43,51 @@ $(".arrowBtn").each(function (index) {
 //-------------------------------------
 //------       Functions     ----------
 //--------------------------------------
+$("#postForm").submit(function (e) {
+  e.preventDefault();
+
+  const route = window.location.pathname;
+  const username = route.split("/")[1];
+  const title = $("#inputTitle").val();
+  const content = $("#inputContent").val();
+  const url = `/postText`;
+  const config = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, title, content }),
+  };
+  // console.log("fetch:" + url);
+  fetchPostAndRender(url, config);
+  $("#inputTitle").val("");
+  $("#inputContent").val("");
+});
 $("#getPosts").on("click", function (e) {
   e.preventDefault();
-  //   const url = `http://localhost:3000/${user.username}/myArticles`;
-  const url = `http://localhost:3000/myArticles`;
-  console.log("fetch:" + url);
-  fetchArticlesAndRender(url);
+
+  const url = `/myArticles`;
+  const containerDiv = document.querySelector(".postContainer");
+  containerDiv.innerHTML = "";
+  // $(".postContainer").innerHTML = ""; //jquery 無效，只有DOM有用 = ="
+
+  // console.log("fetch:" + url);
+  fetchPostAndRender(url);
 });
 $("#getPostRange").on("click", function (e) {
   e.preventDefault();
-  //   const url = `http://localhost:3000/${user.username}/myArticlesByRange`;
-  const url = `http://localhost:3000/myArticlesByRange`;
-  console.log("fetch:" + url);
-  fetchArticlesAndRender(url);
+
+  const url = `/myArticlesByRange`;
+  const containerDiv = document.querySelector(".postContainer");
+  containerDiv.innerHTML = "";
+  // $(".postContainer").innerHTML = ""; //jquery 無效，只有DOM有用 = ="
+
+  // console.log("fetch:" + url);
+  fetchPostAndRender(url);
 });
 
-function fetchArticlesAndRender(url) {
-  fetch(url)
+function fetchPostAndRender(url, config = undefined) {
+  fetch(url, config)
     .then(checkStatus)
     .then((res) => {
       if (res.redirected) {
@@ -78,18 +101,17 @@ function fetchArticlesAndRender(url) {
       if (data) {
         const { posts, message } = data;
         if (posts) {
-          const containerDiv = document.querySelector(".postContainer");
-          containerDiv.innerHTML = "";
-          // $(".postContainer").innerHTML = ""; //jquery 無效，只有DOM有用 = ="
-          posts
-            .slice(0)
-            .reverse()
-            .map((post) => {
-              renderPosts(post);
-            });
+          posts.map((post) => {
+            renderPost(post);
+          });
         }
         if (message) {
-          $(".message").text(message);
+          $(`<h2 class="message">${message}</h2>`)
+            .insertBefore("div.content")
+            .hide()
+            .slideDown(1000)
+            .delay(3000)
+            .slideUp(500);
         }
       }
     })
@@ -109,11 +131,11 @@ function fetchArticlesAndRender(url) {
       });
     })
     .catch((err) => {
-      $(".message").text(err);
+      $(`<h2 class="message">${message}</h2>`).insertBefore("div.content");
       console.error("fetch error:", err);
     });
 }
-function renderPosts(post) {
+function renderPost(post) {
   const containerDiv = document.querySelector(".postContainer");
   const postDiv = document.createElement("div");
   $(postDiv).addClass("postText");
@@ -130,7 +152,7 @@ function renderPosts(post) {
           <span>${post.timestamp}</span>
      </div>
     `;
-  containerDiv.appendChild(postDiv);
+  containerDiv.prepend(postDiv);
 }
 function checkStatus(response) {
   if (response.ok) {
