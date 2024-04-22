@@ -7,14 +7,10 @@ const { newUser, findUser } = require("../db/user-model");
 //---------------------------------
 //------      Routes --------------
 //---------------------------------
-router.get("/", async (req, res) => {
-  const email = req.cookies.user_account;
-  const user = email ? await findUser(email) : undefined;
-  res.render("index", { user });
-});
 
 router.get("/login", async (req, res) => {
   const message = req.flash("message");
+  // console.log(JSON.stringify(req.session));
   res.render("login", { user: undefined, message });
 });
 
@@ -27,7 +23,8 @@ router.post("/login", async (req, res) => {
   }
   const match = await bcrypt.compare(password, user.password);
   if (match) {
-    res.cookie("user_account", user.email);
+    req.session.user_account = user.email;
+    res.cookie("user_id", req.sessionID);
     res.redirect(`/${user.username}/myProfile`);
   } else {
     req.flash("message", "Wrong email or password!");
@@ -36,7 +33,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/signup", (req, res) => {
-  const message = !!req.flash("message") ? undefined : req.flash("message");
+  const message = req.flash("message");
   res.render("signup", { user: undefined, message });
 });
 
@@ -72,9 +69,17 @@ router.post("/signup", async (req, res, next) => {
 });
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("user_account");
-  req.flash("message", "Logout successfully!");
-  res.redirect("/login");
+  req.session.user_account = null;
+  req.clearCookie("user_id");
+  req.session.save(function (err) {
+    if (err) next(err);
+
+    req.session.regenerate(function (err) {
+      if (err) next(err);
+      req.flash("message", "Logout successfully!");
+      return res.redirect("/login");
+    });
+  });
 });
 
 //---------------------------------

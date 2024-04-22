@@ -19,12 +19,12 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: false, // false to store anything before user logs in.
     cookie: {
-      // secure: true, //secure makes flash doesn't work
       httpOnly: true,
       sameSite: "none",
-      maxAge: 60 * 60 * 24 * 1000,
+      // secure: true, //secure makes flash doesn't work
+      maxAge: 24 * 60 * 60 * 1000,
     },
   })
 );
@@ -32,15 +32,16 @@ app.use(flash());
 app.use(authRoute);
 app.use(profileRoute);
 app.use("/public", express.static("public"));
+
 //---------------------------------
 //------      Routes --------------
 //---------------------------------
 
-// app.use((req, res, next) => {
-//   const err = new Error("Not Found");
-//   err.status = 404;
-//   next(err);
-// });
+app.use((req, res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
 
 app.use((err, req, res, next) => {
   console.log(err);
